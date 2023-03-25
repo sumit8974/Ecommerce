@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({ name: "nouser" });
   const history = useNavigate();
+  // console.log(user);
   useEffect(() => {
+    // console.log("context");
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUser(userInfo);
-    if (!userInfo) {
-      history("/");
+    if (userInfo) {
+      setUser(userInfo);
     }
   }, [history]);
   return (

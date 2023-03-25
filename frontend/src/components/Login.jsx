@@ -57,6 +57,7 @@ const Login = () => {
         history("/menus");
       }, 1000);
     } catch (err) {
+      // console.log(err);
       toast({
         title: "Error Occured",
         description: "Check the credentails...",

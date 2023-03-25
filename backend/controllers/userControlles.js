@@ -13,7 +13,9 @@ const registerUser = asyncHandler(async (req, res, next) => {
   // if user already exist //
   const userExists = await User.findOne({ email });
   if (userExists) {
-    res.status(400);
+    // return res
+    //   .status(400)
+    //   .json({ msg: "User already exists...", success: false });
     throw new Error("User already exists");
   }
   const salt = await bcrypt.genSalt(10);
@@ -28,6 +30,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
@@ -59,6 +62,7 @@ const authUser = asyncHandler(async (req, res, next) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {

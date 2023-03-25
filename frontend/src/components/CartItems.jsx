@@ -26,10 +26,8 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineDelete } from "react-icons/ai";
-import React, { useEffect, useRef, useState } from "react";
-import Footer from "./Footer";
-import Navbar from "./Navbar";
+import { AiOutlineDelete } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
 import { CartState } from "../context/CartProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -46,7 +44,7 @@ const cartItems = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-  const { user, setUser } = UserState();
+  const { user } = UserState();
   const {
     state: { cart },
     dispatch,
@@ -60,6 +58,17 @@ const cartItems = () => {
   const handleBuy = async () => {
     // console.log(cart);
     setLoading(true);
+    if (user.name === "nouser") {
+      toast({
+        title: "Login to buy product...",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      setLoading(false);
+      history("/");
+      return;
+    }
     if (cart.length < 1) {
       toast({
         title: "No items in cart",
@@ -97,7 +106,7 @@ const cartItems = () => {
         { userId: user._id, orders: cart },
         config
       );
-      console.log(data);
+      // console.log(data);
       dispatch({
         type: "EMPTY_CART",
       });
@@ -123,13 +132,21 @@ const cartItems = () => {
   };
   return (
     <>
-      <Flex minH={"72.7vh"} mt="120px" ml="10px">
+      <Flex
+        minH={"72.7vh"}
+        mt="120px"
+        ml="10px"
+        flexDirection={{ base: "column", md: "column", lg: "row" }}
+        alignItems={{ base: "left" }}
+      >
         <VStack
           divider={<StackDivider borderColor="gray.200" />}
           spacing={4}
           align="stretch"
           flexBasis={"65%"}
           pb="50px"
+          paddingLeft={"10px"}
+          paddingRight={"10px"}
         >
           <Heading color={"teal"} ml="100px">
             Shopping Cart
@@ -137,11 +154,11 @@ const cartItems = () => {
           {cart.map((prod) => {
             return (
               <Card
-                direction={{ base: "column", sm: "row" }}
+                direction={{ base: "column", sm: "row", md: "row" }}
                 overflow="hidden"
                 variant="outline"
                 maxW={"900px"}
-                ml="100px"
+                ml={{ lg: "100px" }}
                 boxShadow="2xl"
                 p={"0"}
                 key={prod._id}
@@ -152,6 +169,7 @@ const cartItems = () => {
                   src={`../../../src/assets/images/${prod.src}`}
                   alt="Caffe Latte"
                   borderRight={"1px solid gray"}
+                  _hover={{ cursor: "pointer" }}
                 />
 
                 <Stack>
@@ -195,7 +213,7 @@ const cartItems = () => {
                     });
                   }}
                 >
-                  <AiOutlineDelete />
+                  <AiOutlineDelete fontSize={"20"} />
                 </Button>
               </Card>
             );
@@ -203,7 +221,14 @@ const cartItems = () => {
         </VStack>
 
         {/* Order Summary */}
-        <Stack alignContent="center" minW="300px" maxW={"400px"} ml="50px">
+        <Stack
+          alignContent="center"
+          minW="300px"
+          maxW={"400px"}
+          ml="10px"
+          mb="10px"
+          mr="10px"
+        >
           <Card h={"auto"} boxShadow="2xl">
             <CardHeader>
               <Heading size="md">Order Summary</Heading>
@@ -254,7 +279,12 @@ const cartItems = () => {
         </Stack>
       </Flex>
       {/* Paymen Modal Start*/}
-      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+      <Modal
+        blockScrollOnMount={false}
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{ base: "xs", sm: "sm", md: "md" }}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign={"center"}>

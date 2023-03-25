@@ -12,6 +12,7 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { validateEmail } from "../utils/validateEmail";
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
@@ -33,6 +34,16 @@ const SignUp = () => {
       setLoading(false);
       return;
     }
+    if (!validateEmail(email)) {
+      toast({
+        title: "Provide a valid email...",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      setLoading(false);
+      return;
+    }
     try {
       const config = {
         headers: {
@@ -44,6 +55,7 @@ const SignUp = () => {
         { name: userName, password, email },
         config
       );
+      // console.log(data);
       toast({
         title: "User create successfully",
         status: "success",
@@ -56,6 +68,7 @@ const SignUp = () => {
         history("/menus");
       }, 1000);
     } catch (err) {
+      // console.log(err);
       toast({
         title: "Error occured",
         description: err.message,

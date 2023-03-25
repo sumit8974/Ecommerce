@@ -4,94 +4,95 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Container,
   Divider,
   Flex,
   Heading,
-  IconButton,
   Image,
   Stack,
   Text,
-  useToast,
 } from "@chakra-ui/react";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { CartState } from "../context/CartProvider";
+import { ProductState } from "../context/ProductProvider";
 
 const SingleMenuItem = () => {
-  const [item, setItem] = useState({});
-  const [isLoading, setLoading] = useState(false);
-  const toast = useToast();
-  const fetchSingleItem = async () => {
-    let pathName = window.location.pathname.split("/")[2];
-    try {
-      setLoading(true);
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "http://localhost:5000/api/product",
-        { itemId: pathName },
-        config
-      );
-      setLoading(false);
-      setItem(data);
-    } catch (err) {
-      toast({
-        title: "Error Occured!",
-        description: "Could not Load the products",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchSingleItem();
-  }, []);
+  const pathName = window.location.pathname.split("/")[2];
+  const { productState } = ProductState();
+  const {
+    state: { cart },
+    dispatch,
+  } = CartState();
+  const item = productState.product?.find((ele) => {
+    return ele._id == pathName;
+  });
 
   return (
     <>
-      {isLoading ? (
-        <Heading>Laoding...</Heading>
-      ) : (
-        <>
-          <Flex alignItems={"center"} justifyContent={"center"} mt={"49px"}>
-            <Card minW={"md"} maxW="lg" mt={"100px"} boxShadow="dark-lg">
-              <CardBody>
-                <Image
-                  objectFit={"cover"}
-                  w={"80%"}
-                  h="300px"
-                  ml={"auto"}
-                  mr="auto"
-                  _hover={{ cursor: "pointer" }}
-                  src={`../../../src/assets/images/${item.src}`}
-                  loading="lazy"
-                ></Image>
-                <Stack mt="6" spacing="3">
-                  <Heading size="md">{item.name}</Heading>
-                  <Text>{item.desc}</Text>
-                  <Text color="blue.600" fontSize="2xl">
-                    Rs : {item.price}
-                  </Text>
-                </Stack>
-              </CardBody>
-              <Divider />
-              <CardFooter>
-                <ButtonGroup spacing="2">
-                  <Button variant="solid" colorScheme="teal">
-                    Add To Cart
+      <Flex alignItems={"center"} justifyContent={"center"} mt={"30px"}>
+        {item === undefined ? (
+          <Heading mt={"50px"}>🌀 Loading...</Heading>
+        ) : (
+          <Card
+            minW={"base"}
+            mt={"100px"}
+            boxShadow="dark-lg"
+            maxW={{ base: "95%", sm: "90%", md: "80%" }}
+          >
+            <CardBody display={{ md: "block", lg: "flex" }}>
+              <Image
+                objectFit={{ lg: "cover" }}
+                h="400px"
+                maxWidth={{ base: "350px", sm: "400px", md: "500px" }}
+                ml={"auto"}
+                mr={{ base: "auto", sm: "auto", lg: "10px" }}
+                transition={"transform .2s ease-in-out"}
+                _hover={{ cursor: "pointer", transform: "scale(1.1)" }}
+                src={`../../../src/assets/images/${item.src}`}
+                loading="lazy"
+              ></Image>
+              <Stack mt="6" spacing="3">
+                <Heading size="md">{item.name}</Heading>
+                <Text>{item.desc}</Text>
+                <Text color="blue.600" fontSize="2xl">
+                  Rs : {item.price}
+                </Text>
+              </Stack>
+            </CardBody>
+            <Divider />
+            <CardFooter>
+              <ButtonGroup spacing="2">
+                {cart.some((p) => p._id === item._id) ? (
+                  <Button
+                    onClick={() => {
+                      dispatch({
+                        type: "REMOVE_FROM_CART",
+                        payload: item,
+                      });
+                    }}
+                    variant="solid"
+                    colorScheme="red"
+                  >
+                    Remove from cart
                   </Button>
-                </ButtonGroup>
-              </CardFooter>
-            </Card>
-          </Flex>
-        </>
-      )}
+                ) : (
+                  <Button
+                    onClick={() => {
+                      dispatch({
+                        type: "ADD_TO_CART",
+                        payload: item,
+                      });
+                    }}
+                    variant="solid"
+                    colorScheme="teal"
+                  >
+                    Add to cart
+                  </Button>
+                )}
+              </ButtonGroup>
+            </CardFooter>
+          </Card>
+        )}
+      </Flex>
     </>
   );
 };

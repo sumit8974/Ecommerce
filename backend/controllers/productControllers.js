@@ -23,4 +23,39 @@ const singleProduct = asyncHandler(async (req, res, next) => {
   const item = await Product.findById(itemId);
   res.status(200).json(item);
 });
-module.exports = { getProducts, singleProduct };
+
+const uploadProduct = asyncHandler(async (req, res) => {
+  const newpath = "../frontend/src/assets/images/";
+  console.log();
+  const { prodName, prodPrice, prodCategory, prodDesc } = req.body;
+  const file = req.files.file;
+  const fileName = req.files.file.name;
+  await file.mv(`${newpath}${fileName}`, (err) => {
+    if (err) {
+      res.status(500).send({ msg: "File upload error...", code: 200 });
+    }
+  });
+  try {
+    await Product.create({
+      name: prodName,
+      price: prodPrice,
+      category: prodCategory,
+      desc: prodDesc,
+      src: fileName,
+    });
+  } catch (err) {
+    res.status(500).send({ msg: "Product not Added...", code: 200 });
+  }
+  res.status(200).send({ msg: "Product Added...", code: 200 });
+});
+
+const deleteProduct = asyncHandler(async (req, res) => {
+  const { id } = req.body;
+  try {
+    await Product.deleteOne({ _id: id });
+  } catch (err) {
+    res.status(500).json({ msg: "Product not deleted..." });
+  }
+  res.status(200).json({ msg: "Product deleted..." });
+});
+module.exports = { getProducts, singleProduct, uploadProduct, deleteProduct };

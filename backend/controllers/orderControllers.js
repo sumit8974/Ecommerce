@@ -46,4 +46,18 @@ const getAllUserOrders = asyncHandler(async (req, res, next) => {
     res.json(allOrders);
   }
 });
-module.exports = { createOrder, getAllUserOrders };
+
+// for the admin to get all the orders done by the customer
+const adminAllUsersOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find();
+  // console.log("Admin order");
+  // console.log(orders);
+  if (!orders) {
+    res.status(200).json({
+      msg: "No Orders",
+    });
+  } else {
+    res.json(orders);
+  }
+});
+module.exports = { createOrder, getAllUserOrders, adminAllUsersOrders };

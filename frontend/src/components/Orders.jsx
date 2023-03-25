@@ -12,12 +12,15 @@ import {
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserState } from "../context/UserProvider";
 
 const Orders = () => {
   const toast = useToast();
   const { user } = UserState();
   const [orders, setOrders] = useState([]);
+  const history = useNavigate();
+
   const fetchUsersOrders = async () => {
     try {
       const config = {
@@ -54,6 +57,7 @@ const Orders = () => {
       minH={"74.7vh"}
       display={"flex"}
       mb={"80px"}
+      p={"20px"}
     >
       <Heading color={"teal"} ml="100px">
         Your Orders
