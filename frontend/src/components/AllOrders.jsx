@@ -104,6 +104,9 @@ const AllOrders = () => {
                             Rs {ord.price}
                           </Text>
                           <Text>Quantity : {ord.qty}</Text>
+                          <Text>
+                            Order Date : {ord.date.toString().slice(0, 10)}
+                          </Text>
                         </Stack>
                       </CardBody>
                       <Divider />

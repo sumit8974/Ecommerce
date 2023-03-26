@@ -45,9 +45,9 @@ const Orders = () => {
     }
   };
   useEffect(() => {
-    fetchUsersOrders();
+    if (user.name !== "nouser") fetchUsersOrders();
     // console.log(orders.length > 0);
-  }, []);
+  }, [user]);
   return (
     <VStack
       divider={<StackDivider borderColor="gray.200" />}
@@ -82,6 +82,7 @@ const Orders = () => {
                 src={`../../../src/assets/images/${order.src}`}
                 alt="Caffe Latte"
                 borderRight={"1px solid gray"}
+                cursor={"pointer"}
               />
 
               <Stack>
@@ -89,7 +90,7 @@ const Orders = () => {
                   <Heading size="md">{order.name}</Heading>
                   <Text py="2">{order.desc.slice(0)}</Text>
                   <Text>{`Ouantity : ${order.qty}`}</Text>
-                  <Text>ID : 12345</Text>
+                  <Text>Date : {order.date.toString().slice(0, 10)}</Text>
                   <Text color="blue.600" fontSize="2xl">
                     {`Amount : ${order.price}`}
                   </Text>

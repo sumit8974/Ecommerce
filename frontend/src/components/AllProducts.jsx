@@ -75,7 +75,7 @@ const AllProducts = () => {
       alignItems={"center"}
       justifyContent="center"
       position="relative"
-      mt={"100px"}
+      mt={"30px"}
     >
       {isLoading ? (
         <Heading>🌀 Loading...</Heading>
