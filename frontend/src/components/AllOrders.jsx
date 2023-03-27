@@ -8,7 +8,6 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Container,
   Divider,
   Flex,
   Heading,
@@ -33,10 +32,7 @@ const AllOrders = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(
-        "http://localhost:5000/api/order/admin",
-        config
-      );
+      const { data } = await axios.get("api/order/admin", config);
       // console.log(data);
       setOrders(data);
     } catch (err) {

@@ -28,10 +28,7 @@ const Orders = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(
-        "http://localhost:5000/api/order",
-        config
-      );
+      const { data } = await axios.get("api/order", config);
       // console.log(data);
       setOrders(data.orders);
     } catch (err) {

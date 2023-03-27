@@ -20,7 +20,7 @@ const ProductProvider = ({ children }) => {
     // console.log("product provider...");
     try {
       setLoading(true);
-      const { data } = await axios.get("http://localhost:5000/api/product");
+      const { data } = await axios.get("api/product");
       setLoading(false);
       productState.product = data;
     } catch (err) {

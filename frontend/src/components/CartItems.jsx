@@ -102,7 +102,7 @@ const cartItems = () => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/order",
+        "api/order",
         { userId: user._id, orders: cart },
         config
       );

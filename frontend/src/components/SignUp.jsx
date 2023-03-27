@@ -6,6 +6,7 @@ import {
   InputGroup,
   InputRightElement,
   Link,
+  Spinner,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -51,7 +52,8 @@ const SignUp = () => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/user/",
+        "api/user/",
+        // "https://ecommerce-sumit.onrender.com/api/user/",
         { name: userName, password, email },
         config
       );
@@ -123,7 +125,7 @@ const SignUp = () => {
         width={"100%"}
         onClick={handleSignUp}
       >
-        Signup
+        {loading ? <Spinner /> : "Signup"}
       </Button>
     </VStack>
   );
