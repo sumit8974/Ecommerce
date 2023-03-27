@@ -25,23 +25,14 @@ const singleProduct = asyncHandler(async (req, res, next) => {
 });
 
 const uploadProduct = asyncHandler(async (req, res) => {
-  const newpath = "../frontend/src/assets/images/";
-  console.log();
-  const { prodName, prodPrice, prodCategory, prodDesc } = req.body;
-  const file = req.files.file;
-  const fileName = req.files.file.name;
-  await file.mv(`${newpath}${fileName}`, (err) => {
-    if (err) {
-      res.status(500).send({ msg: "File upload error...", code: 200 });
-    }
-  });
+  const { prodName, prodPrice, prodCategory, prodDesc, imageFile } = req.body;
   try {
     await Product.create({
       name: prodName,
       price: prodPrice,
       category: prodCategory,
       desc: prodDesc,
-      src: fileName,
+      src: imageFile,
     });
   } catch (err) {
     res.status(500).send({ msg: "Product not Added...", code: 200 });
