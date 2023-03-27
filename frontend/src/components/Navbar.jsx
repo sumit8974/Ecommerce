@@ -23,7 +23,7 @@ import { CartState } from "../context/CartProvider";
 import { ProductState } from "../context/ProductProvider";
 const Navbar = () => {
   const [itemName, setItemName] = useState("");
-  const { productDispatch } = ProductState();
+  const { productDispatch, fetchMenus } = ProductState();
   const { user } = UserState();
   const history = useNavigate();
   const toast = useToast();
@@ -88,7 +88,10 @@ const Navbar = () => {
         <Heading as={"h1"} ml="5px" color={"teal"}>
           <Link
             _hover={{ textDecoration: "none" }}
-            onClick={() => history("/menus")}
+            onClick={() => {
+              fetchMenus();
+              history("/menus");
+            }}
           >
             TechHub
           </Link>
