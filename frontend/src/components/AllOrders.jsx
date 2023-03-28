@@ -33,7 +33,7 @@ const AllOrders = () => {
         },
       };
       const { data } = await axios.get(
-        process.env.VITE_URL + "/api/order/admin",
+        "https://ecommerce-sumit.onrender.com/api/order/admin",
         config
       );
       // console.log(data);

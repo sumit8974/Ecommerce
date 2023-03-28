@@ -23,7 +23,9 @@ const AllProducts = () => {
   const fetchMenus = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(process.env.VITE_URL + "/api/product");
+      const { data } = await axios.get(
+        "https://ecommerce-sumit.onrender.com/api/product"
+      );
       setLoading(false);
       setMenus(data);
     } catch (err) {
@@ -45,7 +47,7 @@ const AllProducts = () => {
     };
     try {
       const { data } = await axios.post(
-        process.env.VITE_URL + "/api/product/delete",
+        "https://ecommerce-sumit.onrender.com/api/product/delete",
         { id },
         config
       );

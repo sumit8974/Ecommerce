@@ -20,7 +20,9 @@ const ProductProvider = ({ children }) => {
     // console.log("product provider...");
     try {
       setLoading(true);
-      const { data } = await axios.get(process.env.VITE_URL + "/api/product");
+      const { data } = await axios.get(
+        "https://ecommerce-sumit.onrender.com/api/product"
+      );
       setLoading(false);
       productState.product = data;
     } catch (err) {

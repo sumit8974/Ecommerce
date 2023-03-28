@@ -43,7 +43,7 @@ const Login = () => {
       };
       const { data } = await axios.post(
         // "http://localhost:5000/api/user/login",
-        process.env.VITE_URL + "/api/user/login",
+        "https://ecommerce-sumit.onrender.com/api/user/login",
         { email, password },
         config
       );

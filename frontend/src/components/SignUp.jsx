@@ -52,7 +52,7 @@ const SignUp = () => {
         },
       };
       const { data } = await axios.post(
-        process.env.VITE_URL + "/api/user/",
+        "https://ecommerce-sumit.onrender.com/api/user/",
         // "https://ecommerce-sumit.onrender.com/api/user/",
         { name: userName, password, email },
         config

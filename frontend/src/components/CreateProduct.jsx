@@ -116,7 +116,7 @@ const CreateProduct = () => {
     formData.append("prodDesc", product.desc);
     try {
       const { data } = await axios.post(
-        process.env.VITE_URL + "/api/product/upload",
+        "https://ecommerce-sumit.onrender.com/api/product/upload",
         formData,
         config
       );

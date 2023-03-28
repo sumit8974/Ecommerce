@@ -102,7 +102,7 @@ const cartItems = () => {
         },
       };
       const { data } = await axios.post(
-        process.env.VITE_URL + "/api/order",
+        "https://ecommerce-sumit.onrender.com/api/order",
         { userId: user._id, orders: cart },
         config
       );
