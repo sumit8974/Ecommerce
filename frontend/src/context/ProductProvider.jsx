@@ -20,7 +20,9 @@ const ProductProvider = ({ children }) => {
     // console.log("product provider...");
     try {
       setLoading(true);
-      const { data } = await axios.get("api/product");
+      const { data } = await axios.get(
+        import.meta.env.VITE_URL + "/api/product"
+      );
       setLoading(false);
       productState.product = data;
     } catch (err) {

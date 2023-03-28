@@ -102,7 +102,7 @@ const cartItems = () => {
         },
       };
       const { data } = await axios.post(
-        "api/order",
+        import.meta.env.VITE_URL + "/api/order",
         { userId: user._id, orders: cart },
         config
       );

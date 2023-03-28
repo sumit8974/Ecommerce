@@ -28,7 +28,10 @@ const Orders = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get("api/order", config);
+      const { data } = await axios.get(
+        import.meta.env.VITE_URL + "/api/order",
+        config
+      );
       // console.log(data);
       setOrders(data.orders);
     } catch (err) {

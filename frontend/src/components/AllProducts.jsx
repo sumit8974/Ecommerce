@@ -23,7 +23,9 @@ const AllProducts = () => {
   const fetchMenus = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get("api/product");
+      const { data } = await axios.get(
+        import.meta.env.VITE_URL + "/api/product"
+      );
       setLoading(false);
       setMenus(data);
     } catch (err) {
@@ -44,7 +46,11 @@ const AllProducts = () => {
       },
     };
     try {
-      const { data } = await axios.post("api/product/delete", { id }, config);
+      const { data } = await axios.post(
+        import.meta.env.VITE_URL + "/api/product/delete",
+        { id },
+        config
+      );
     } catch (err) {
       toast({
         title: "Error Occured!",
