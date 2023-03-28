@@ -23,9 +23,7 @@ const AllProducts = () => {
   const fetchMenus = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        import.meta.env.VITE_URL + "/api/product"
-      );
+      const { data } = await axios.get(process.env.VITE_URL + "/api/product");
       setLoading(false);
       setMenus(data);
     } catch (err) {
@@ -47,7 +45,7 @@ const AllProducts = () => {
     };
     try {
       const { data } = await axios.post(
-        import.meta.env.VITE_URL + "/api/product/delete",
+        process.env.VITE_URL + "/api/product/delete",
         { id },
         config
       );

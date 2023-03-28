@@ -43,7 +43,7 @@ const Login = () => {
       };
       const { data } = await axios.post(
         // "http://localhost:5000/api/user/login",
-        import.meta.env.VITE_URL + "/api/user/login",
+        process.env.VITE_URL + "/api/user/login",
         { email, password },
         config
       );

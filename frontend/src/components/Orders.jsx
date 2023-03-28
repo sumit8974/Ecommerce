@@ -29,7 +29,7 @@ const Orders = () => {
         },
       };
       const { data } = await axios.get(
-        import.meta.env.VITE_URL + "/api/order",
+        process.env.VITE_URL + "/api/order",
         config
       );
       // console.log(data);

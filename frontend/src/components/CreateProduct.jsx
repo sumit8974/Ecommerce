@@ -116,7 +116,7 @@ const CreateProduct = () => {
     formData.append("prodDesc", product.desc);
     try {
       const { data } = await axios.post(
-        import.meta.env.VITE_URL + "/api/product/upload",
+        process.env.VITE_URL + "/api/product/upload",
         formData,
         config
       );

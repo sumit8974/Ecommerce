@@ -33,7 +33,7 @@ const AllOrders = () => {
         },
       };
       const { data } = await axios.get(
-        import.meta.env.VITE_URL + "/api/order/admin",
+        process.env.VITE_URL + "/api/order/admin",
         config
       );
       // console.log(data);
