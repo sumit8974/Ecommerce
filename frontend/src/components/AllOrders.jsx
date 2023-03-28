@@ -91,7 +91,7 @@ const AllOrders = () => {
                             cursor: "pointer",
                             transform: "scale(1.1)",
                           }}
-                          src={`../../../src/assets/images/${ord.src}`}
+                          src={`${ord.src}`}
                           loading="lazy"
                         ></Image>
                         <Stack mt="6" spacing="0">

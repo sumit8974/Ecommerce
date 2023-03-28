@@ -76,7 +76,7 @@ const Orders = () => {
               <Image
                 objectFit="fit"
                 maxW={{ base: "100%", sm: "200px" }}
-                src={`../../../src/assets/images/${order.src}`}
+                src={`${order.src}`}
                 alt="Caffe Latte"
                 borderRight={"1px solid gray"}
                 cursor={"pointer"}

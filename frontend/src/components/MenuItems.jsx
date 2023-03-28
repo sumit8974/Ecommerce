@@ -98,7 +98,7 @@ const MenuItems = () => {
                     mr="auto"
                     transition={"transform .2s ease-in-out"}
                     _hover={{ cursor: "pointer", transform: "scale(1.1)" }}
-                    src={`../../../src/assets/images/${data.src}`}
+                    src={`${data.src}`}
                     loading="lazy"
                   ></Image>
                   <Stack mt="6" spacing="3">

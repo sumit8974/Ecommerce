@@ -166,7 +166,7 @@ const cartItems = () => {
                 <Image
                   objectFit="fit"
                   maxW={{ base: "100%", sm: "200px" }}
-                  src={`../../../src/assets/images/${prod.src}`}
+                  src={`${prod.src}`}
                   alt="Caffe Latte"
                   borderRight={"1px solid gray"}
                   _hover={{ cursor: "pointer" }}

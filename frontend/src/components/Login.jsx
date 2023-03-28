@@ -6,6 +6,7 @@ import {
   InputGroup,
   InputRightElement,
   Link,
+  Spinner,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -105,7 +106,7 @@ const Login = () => {
         width={"100%"}
         onClick={handleLogin}
       >
-        Login
+        {loading ? <Spinner /> : "Login"}
       </Button>
       <Link>Forget Password</Link>
     </VStack>
