@@ -19,7 +19,7 @@ const HomePage = () => {
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
-      history("/menus");
+      history("/");
     }
   }, []);
   return (
