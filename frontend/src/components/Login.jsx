@@ -56,7 +56,7 @@ const Login = () => {
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       setTimeout(() => {
-        history("/menus");
+        history("/");
       }, 1000);
     } catch (err) {
       // console.log(err);

@@ -12,8 +12,8 @@ function App() {
     <>
       {/* <BrowserRouter> */}
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        <Route exact path="/menus" element={<MenusPage />} />
+        <Route exact path="/" element={<MenusPage />} />
+        <Route exact path="/home" element={<HomePage />} />
         <Route exact path="/singlemenu/:id" element={<SingleItemPage />} />
         <Route exact path="/cart" element={<CartPage />} />
         <Route exact path="/orders" element={<OrdersPage />} />

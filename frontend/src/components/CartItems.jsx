@@ -66,7 +66,7 @@ const cartItems = () => {
         isClosable: true,
       });
       setLoading(false);
-      history("/");
+      history("/home");
       return;
     }
     if (cart.length < 1) {

@@ -54,7 +54,7 @@ const Navbar = () => {
         isClosable: true,
         duration: 3000,
       });
-      history("/");
+      history("/home");
       return;
     }
     history("/orders");
@@ -68,7 +68,7 @@ const Navbar = () => {
       duration: 5000,
     });
     setTimeout(() => {
-      history("/");
+      history("/home");
     }, 1000);
   };
   return (
@@ -90,7 +90,7 @@ const Navbar = () => {
             _hover={{ textDecoration: "none" }}
             onClick={() => {
               fetchMenus();
-              history("/menus");
+              history("/");
             }}
           >
             TechHub
@@ -116,7 +116,7 @@ const Navbar = () => {
           >
             {!user
               ? "No User"
-              : user.name.length > 5
+              : user.name.length > 6
               ? user.name.slice(0, 5) + ".."
               : user.name}
           </Link>
@@ -142,7 +142,11 @@ const Navbar = () => {
             </Button>
           ) : null}
           {user?.name === "nouser" ? (
-            <Button colorScheme="teal" mr="10px" onClick={() => history("/")}>
+            <Button
+              colorScheme="teal"
+              mr="10px"
+              onClick={() => history("/home")}
+            >
               Login
             </Button>
           ) : (
@@ -185,7 +189,7 @@ const Navbar = () => {
                 User:{" "}
                 {!user
                   ? "No User"
-                  : user.name.length > 5
+                  : user.name.length > 6
                   ? user.name.slice(0, 5) + ".."
                   : user.name}
               </Link>
@@ -228,7 +232,7 @@ const Navbar = () => {
                 <Button
                   padding={"30px"}
                   color={"teal.500"}
-                  onClick={() => history("/")}
+                  onClick={() => history("/home")}
                 >
                   Login
                 </Button>
