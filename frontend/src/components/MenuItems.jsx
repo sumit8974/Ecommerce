@@ -51,7 +51,7 @@ const MenuItems = () => {
     let filterByProduct = productState.byProductType;
     if (searchQuery) {
       sortedProducts = sortedProducts.filter((prod) =>
-        prod.name.toLowerCase().includes(searchQuery)
+        prod.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
     if (filterByProduct === "Laptop") {
