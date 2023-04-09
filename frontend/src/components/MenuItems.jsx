@@ -8,6 +8,7 @@ import {
   Flex,
   Heading,
   Image,
+  Skeleton,
   Stack,
   Text,
   useToast,
@@ -85,7 +86,12 @@ const MenuItems = () => {
         mt={"30px"}
       >
         {isLoading ? (
-          <Heading>🌀 Loading...</Heading>
+          <Skeleton
+            height={"90vh"}
+            w={"90vw"}
+            isLoaded={!isLoading}
+            fadeDuration={2}
+          ></Skeleton>
         ) : (
           transformProducts()?.map((data, index) => {
             return (
