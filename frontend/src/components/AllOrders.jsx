@@ -24,7 +24,7 @@ const AllOrders = () => {
   const toast = useToast();
   const { user } = UserState();
   const [Allorders, setOrders] = useState([]);
-
+  const API_URL = import.meta.env.VITE_SERVICE_URL;
   const fetchAllOrders = async () => {
     try {
       const config = {
@@ -32,10 +32,7 @@ const AllOrders = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(
-        "https://ecommerce-sumit.onrender.com/api/order/admin",
-        config
-      );
+      const { data } = await axios.get(`${API_URL}/api/order/admin`, config);
       // console.log(data);
       setOrders(data);
     } catch (err) {

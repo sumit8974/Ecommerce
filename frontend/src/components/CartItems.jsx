@@ -44,6 +44,7 @@ const cartItems = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const API_URL = import.meta.env.VITE_SERVICE_URL;
   const { user } = UserState();
   const {
     state: { cart },
@@ -102,7 +103,7 @@ const cartItems = () => {
         },
       };
       const { data } = await axios.post(
-        "https://ecommerce-sumit.onrender.com/api/order",
+        `${API_URL}/api/order`,
         { userId: user._id, orders: cart },
         config
       );

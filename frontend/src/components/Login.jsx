@@ -19,6 +19,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const API_URL = import.meta.env.VITE_SERVICE_URL;
   const toast = useToast();
 
   const history = useNavigate();
@@ -42,8 +43,7 @@ const Login = () => {
         },
       };
       const { data } = await axios.post(
-        // "http://localhost:5000/api/user/login",
-        "https://ecommerce-sumit.onrender.com/api/user/login",
+        `${API_URL}/api/user/login`,
         { email, password },
         config
       );

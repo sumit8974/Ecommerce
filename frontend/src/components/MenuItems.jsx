@@ -28,24 +28,6 @@ const MenuItems = () => {
     dispatch,
   } = CartState();
   const { productState, isLoading } = ProductState();
-  // const prod = productState.product;
-  // const fetchMenus = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { data } = await axios.get("http://localhost:5000/api/product");
-  //     setLoading(false);
-  //     setMenus(data);
-  //   } catch (err) {
-  //     toast({
-  //       title: "Error Occured!",
-  //       description: "Could not Load the products",
-  //       status: "error",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //     setLoading(false);
-  //   }
-  // };
   const transformProducts = () => {
     let sortedProducts = productState.product;
     let searchQuery = productState.searchQuery;

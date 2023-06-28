@@ -16,13 +16,12 @@ const ProductProvider = ({ children }) => {
     searchQuery: "",
     byProductType: "",
   });
+  const API_URL = import.meta.env.VITE_SERVICE_URL;
   const fetchMenus = async () => {
     // console.log("product provider...");
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        "https://ecommerce-sumit.onrender.com/api/product"
-      );
+      const { data } = await axios.get(`${API_URL}/api/product`);
       setLoading(false);
       productState.product = data;
     } catch (err) {
