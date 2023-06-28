@@ -25,8 +25,8 @@ app.get("/", (req, res) => {
 app.use("/api/user", userRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/product", productRoutes);
-// app.use(notFound);
-// app.use(errorHandler);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Server is running on port 5000");
