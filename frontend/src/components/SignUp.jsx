@@ -50,7 +50,7 @@ const SignUp = () => {
     if (!checkPassword(password)) {
       toast({
         title:
-          "password of min 8 letter, with at least a symbol, upper, lower case and a number...",
+          "Enter a password with at least 8 characters, including symbol, uppercase letter, lowercase letter, and number.",
         status: "warning",
         duration: 5000,
         isClosable: true,
