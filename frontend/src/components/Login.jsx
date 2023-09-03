@@ -20,7 +20,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [searchParams] = useSearchParams();
   const toast = useToast();
 
   const history = useNavigate();
@@ -43,8 +42,12 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       };
-      const loginData = { email, password };
-      const data = await loginUser(loginData, config);
+      const { data } = await axios.post(
+        // "http://localhost:5000/api/user/login",
+        "https://ecommerce-sumit.onrender.com/api/user/login",
+        { email, password },
+        config
+      );
       toast({
         title: "Login Successfull",
         status: "success",

@@ -14,7 +14,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { validateEmail } from "../utils/validateEmail";
-import { createUser } from "../api";
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
@@ -22,6 +21,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const API_URL = import.meta.env.VITE_SERVICE_URL;
   const toast = useToast();
   const history = useNavigate();
   const handleSignUp = async () => {
@@ -46,14 +46,29 @@ const SignUp = () => {
       setLoading(false);
       return;
     }
+    if (!checkPassword(password)) {
+      toast({
+        title:
+          "Enter a password with at least 8 characters, including symbol, uppercase letter, lowercase letter, and number.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      setLoading(false);
+      return;
+    }
     try {
       const config = {
         headers: {
           "Content-Type": "application/json",
         },
       };
-      const newUserData = { name: userName, password, email };
-      const data = await createUser(newUserData, config);
+      const { data } = await axios.post(
+        "https://ecommerce-sumit.onrender.com/api/user/",
+        // "https://ecommerce-sumit.onrender.com/api/user/",
+        { name: userName, password, email },
+        config
+      );
       // console.log(data);
       toast({
         title: "User create successfully",
@@ -67,10 +82,9 @@ const SignUp = () => {
         history("/");
       }, 1000);
     } catch (err) {
-      // console.log(err);
       toast({
         title: "Error occured",
-        description: err.message,
+        description: "Email already exist",
         status: "error",
         duration: 5000,
         isClosable: true,

@@ -28,6 +28,7 @@ const CreateProduct = () => {
   const [isUploading, setUploading] = useState(false);
   const [isImageUploading, setImageUploading] = useState(false);
   const toast = useToast();
+  const API_URL = import.meta.env.VITE_SERVICE_URL;
   async function handleUploadImage() {
     setImageUploading(true);
     if (imageFile === undefined) {
@@ -117,8 +118,12 @@ const CreateProduct = () => {
     formData.append("prodDesc", product.desc);
 
     try {
-      const data = await createProduct(formData, config);
-      // console.log(data);
+      const { data } = await axios.post(
+        "https://ecommerce-sumit.onrender.com/api/product/upload",
+        formData,
+        config
+      );
+      console.log(data);
     } catch (err) {
       toast({
         title: "Error Occured...",

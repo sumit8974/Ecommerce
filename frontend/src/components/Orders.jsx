@@ -21,7 +21,7 @@ const Orders = () => {
   const { user } = UserState();
   const [orders, setOrders] = useState([]);
   const history = useNavigate();
-
+  const API_URL = import.meta.env.VITE_SERVICE_URL;
   const fetchUsersOrders = async () => {
     try {
       const config = {
@@ -29,7 +29,11 @@ const Orders = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const data = await getUserOrdersfromApi(config);
+      const { data } = await axios.get(
+        "https://ecommerce-sumit.onrender.com/api/order",
+        config
+      );
+      // console.log(data);
       setOrders(data.orders);
     } catch (err) {
       toast({
@@ -44,6 +48,7 @@ const Orders = () => {
   useEffect(() => {
     if (user.name !== "nouser") fetchUsersOrders();
     // console.log(orders.length > 0);
+    console.log(orders);
   }, [user]);
   return (
     <VStack
@@ -59,7 +64,7 @@ const Orders = () => {
       <Heading color={"teal"} ml="100px">
         Your Orders
       </Heading>
-      {orders?.length > 0 ? (
+      {orders?.length > 0 &&
         orders.map((order, index) => {
           return (
             <Card
@@ -95,12 +100,7 @@ const Orders = () => {
               </Stack>
             </Card>
           );
-        })
-      ) : (
-        <Text fontSize="20px" fontWeight="medium" textAlign="center">
-          You do not have any orders...
-        </Text>
-      )}
+        })}
     </VStack>
   );
 };

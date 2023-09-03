@@ -21,11 +21,12 @@ const AllProducts = () => {
   const { user } = UserState();
   const [isLoading, setLoading] = useState(false);
   const toast = useToast();
-
   const fetchMenus = async () => {
     try {
       setLoading(true);
-      const data = await fetchMenusFromApi();
+      const { data } = await axios.get(
+        "https://ecommerce-sumit.onrender.com/api/product"
+      );
       setLoading(false);
       setMenus(data);
     } catch (err) {
@@ -46,7 +47,11 @@ const AllProducts = () => {
       },
     };
     try {
-      await deleteProductById(id, config);
+      const { data } = await axios.post(
+        "https://ecommerce-sumit.onrender.com/api/product/delete",
+        { id },
+        config
+      );
     } catch (err) {
       toast({
         title: "Error Occured!",
