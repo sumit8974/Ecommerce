@@ -14,7 +14,7 @@ JWT_SECRET = ''
 
 Add some data in ``` MongoDB ``` inside the collection you created for the products by using the product modal present inside the backend directory.
 
-Now run ``` npn run dev ``` for the frontend and ``` nodemon server.js ``` for the backend.
+Now run ``` npm run dev ``` for the frontend and ``` nodemon server.js ``` for the backend.
 
 
 
