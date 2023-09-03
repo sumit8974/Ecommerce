@@ -29,10 +29,10 @@ import {
 import { AiOutlineDelete } from "react-icons/ai";
 import React, { useEffect, useState } from "react";
 import { CartState } from "../context/CartProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { UserState } from "../context/UserProvider";
-
+import { buyProducts } from "../api";
 const cartItems = () => {
   const [total, setTotal] = useState(0);
   const [fullName, setFullName] = useState("");
@@ -55,20 +55,8 @@ const cartItems = () => {
     );
   }, [cart]);
 
-  const handleBuy = async () => {
-    // console.log(cart);
+  const handleBuy = async (token) => {
     setLoading(true);
-    if (user.name === "nouser") {
-      toast({
-        title: "Login to buy product...",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-      setLoading(false);
-      history("/home");
-      return;
-    }
     if (cart.length < 1) {
       toast({
         title: "No items in cart",
@@ -101,11 +89,12 @@ const cartItems = () => {
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axios.post(
-        "https://ecommerce-sumit.onrender.com/api/order",
-        { userId: user._id, orders: cart },
-        config
-      );
+      const orderData = {
+        userId: user._id,
+        orders: cart,
+        amount: (total - 700) / 100,
+      };
+      const data = await buyProducts(orderData, config);
       // console.log(data);
       dispatch({
         type: "EMPTY_CART",
@@ -121,6 +110,7 @@ const cartItems = () => {
       });
       setLoading(false);
     } catch (err) {
+      console.log(err);
       toast({
         title: "Error from server...",
         status: "error",
@@ -130,6 +120,19 @@ const cartItems = () => {
       setLoading(false);
     }
   };
+  function handleCheckOut() {
+    if (user.name === "nouser") {
+      toast({
+        title: "Login to buy product...",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      history("/home?redirectTo=/cart");
+      return;
+    }
+    onOpen();
+  }
   return (
     <>
       <Flex
@@ -177,9 +180,10 @@ const cartItems = () => {
                     <Heading size="md">{prod.name}</Heading>
                     <Text py="2">{prod.desc}</Text>
                   </CardBody>
-                  <CardFooter gap={"2"}>
+                  <CardFooter gap={{ base: "2", sm: "1", md: "2" }}>
                     <Select
-                      w={"70px"}
+                      w="60px"
+                      h="40px"
                       value={prod.qty}
                       onChange={(e) =>
                         dispatch({
@@ -197,24 +201,29 @@ const cartItems = () => {
                       <option value="4">4</option>
                       <option value="5">5</option>
                     </Select>
-                    <Text color="blue.600" fontSize="2xl">
+                    <Text
+                      color="blue.600"
+                      fontSize={{ base: "xl", sm: "md", md: "xl" }}
+                      display="flex"
+                      alignItems="center"
+                    >
                       {`Rs : ${prod.price}`}
                     </Text>
+                    <Button
+                      bg={"white"}
+                      _hover={{ bg: "red.100" }}
+                      color="red"
+                      onClick={() => {
+                        dispatch({
+                          type: "REMOVE_FROM_CART",
+                          payload: prod,
+                        });
+                      }}
+                    >
+                      <AiOutlineDelete fontSize={"15"} />
+                    </Button>
                   </CardFooter>
                 </Stack>
-                <Button
-                  bg={"white"}
-                  _hover={{ bg: "white" }}
-                  color="red"
-                  onClick={() => {
-                    dispatch({
-                      type: "REMOVE_FROM_CART",
-                      payload: prod,
-                    });
-                  }}
-                >
-                  <AiOutlineDelete fontSize={"20"} />
-                </Button>
               </Card>
             );
           })}
@@ -269,7 +278,11 @@ const cartItems = () => {
                   </Text>
                 </Box>
                 <Box>
-                  <Button variant="solid" colorScheme="teal" onClick={onOpen}>
+                  <Button
+                    variant="solid"
+                    colorScheme="teal"
+                    onClick={handleCheckOut}
+                  >
                     Check Out
                   </Button>
                 </Box>

@@ -28,24 +28,6 @@ const MenuItems = () => {
     dispatch,
   } = CartState();
   const { productState, isLoading } = ProductState();
-  // const prod = productState.product;
-  // const fetchMenus = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { data } = await axios.get("http://localhost:5000/api/product");
-  //     setLoading(false);
-  //     setMenus(data);
-  //   } catch (err) {
-  //     toast({
-  //       title: "Error Occured!",
-  //       description: "Could not Load the products",
-  //       status: "error",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //     setLoading(false);
-  //   }
-  // };
   const transformProducts = () => {
     let sortedProducts = productState.product;
     let searchQuery = productState.searchQuery;
@@ -95,15 +77,19 @@ const MenuItems = () => {
         ) : (
           transformProducts()?.map((data, index) => {
             return (
-              <Card minW={"sm"} maxW="sm" key={data._id}>
+              <Card
+                minW={{ base: "sm", md: "300px" }}
+                maxW={{ base: "sm", md: "300px" }}
+                key={data._id}
+              >
                 <CardBody>
                   <Image
-                    objectFit={"cover"}
+                    objectFit={{ base: "cover", mid: "fit" }}
                     h="260px"
                     ml={"auto"}
                     mr="auto"
                     transition={"transform .2s ease-in-out"}
-                    _hover={{ cursor: "pointer", transform: "scale(1.1)" }}
+                    _hover={{ cursor: "pointer" }}
                     src={`${data.src}`}
                     loading="lazy"
                   ></Image>

@@ -46,7 +46,7 @@ const SingleMenuItem = () => {
                 ml={"auto"}
                 mr={{ base: "auto", sm: "auto", lg: "10px" }}
                 transition={"transform .2s ease-in-out"}
-                _hover={{ cursor: "pointer", transform: "scale(1.1)" }}
+                _hover={{ cursor: "pointer" }}
                 src={`${item.src}`}
                 loading="lazy"
               ></Image>

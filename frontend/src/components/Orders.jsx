@@ -14,6 +14,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserState } from "../context/UserProvider";
+import { getUserOrdersfromApi } from "../api";
 
 const Orders = () => {
   const toast = useToast();
@@ -28,11 +29,7 @@ const Orders = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(
-        "https://ecommerce-sumit.onrender.com/api/order",
-        config
-      );
-      // console.log(data);
+      const data = await getUserOrdersfromApi(config);
       setOrders(data.orders);
     } catch (err) {
       toast({
@@ -62,7 +59,7 @@ const Orders = () => {
       <Heading color={"teal"} ml="100px">
         Your Orders
       </Heading>
-      {orders?.length > 0 &&
+      {orders?.length > 0 ? (
         orders.map((order, index) => {
           return (
             <Card
@@ -98,7 +95,12 @@ const Orders = () => {
               </Stack>
             </Card>
           );
-        })}
+        })
+      ) : (
+        <Text fontSize="20px" fontWeight="medium" textAlign="center">
+          You do not have any orders...
+        </Text>
+      )}
     </VStack>
   );
 };

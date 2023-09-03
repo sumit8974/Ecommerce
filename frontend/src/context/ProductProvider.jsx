@@ -7,6 +7,7 @@ import {
 } from "react";
 import { productReducers } from "./productReducers";
 import axios from "axios";
+import { fetchMenusFromApi } from "../api";
 
 const Product = createContext();
 const ProductProvider = ({ children }) => {
@@ -20,9 +21,7 @@ const ProductProvider = ({ children }) => {
     // console.log("product provider...");
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        "https://ecommerce-sumit.onrender.com/api/product"
-      );
+      const data = await fetchMenusFromApi();
       setLoading(false);
       productState.product = data;
     } catch (err) {

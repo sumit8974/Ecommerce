@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const history = useNavigate();
+
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {

@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { validateEmail } from "../utils/validateEmail";
+import { createUser } from "../api";
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
@@ -51,12 +52,8 @@ const SignUp = () => {
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axios.post(
-        "https://ecommerce-sumit.onrender.com/api/user/",
-        // "https://ecommerce-sumit.onrender.com/api/user/",
-        { name: userName, password, email },
-        config
-      );
+      const newUserData = { name: userName, password, email };
+      const data = await createUser(newUserData, config);
       // console.log(data);
       toast({
         title: "User create successfully",

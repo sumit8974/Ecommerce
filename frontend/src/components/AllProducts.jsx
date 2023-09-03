@@ -14,18 +14,18 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { UserState } from "../context/UserProvider";
+import { deleteProductById, fetchMenusFromApi } from "../api";
 
 const AllProducts = () => {
   const [menus, setMenus] = useState([]);
   const { user } = UserState();
   const [isLoading, setLoading] = useState(false);
   const toast = useToast();
+
   const fetchMenus = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        "https://ecommerce-sumit.onrender.com/api/product"
-      );
+      const data = await fetchMenusFromApi();
       setLoading(false);
       setMenus(data);
     } catch (err) {
@@ -46,11 +46,7 @@ const AllProducts = () => {
       },
     };
     try {
-      const { data } = await axios.post(
-        "https://ecommerce-sumit.onrender.com/api/product/delete",
-        { id },
-        config
-      );
+      await deleteProductById(id, config);
     } catch (err) {
       toast({
         title: "Error Occured!",
@@ -84,15 +80,19 @@ const AllProducts = () => {
       ) : (
         menus.map((data, index) => {
           return (
-            <Card minW={"sm"} maxW="sm" key={data._id}>
+            <Card
+              minW={{ base: "sm", md: "300px" }}
+              maxW={{ base: "sm", md: "300px" }}
+              key={data._id}
+            >
               <CardBody>
                 <Image
-                  objectFit={"cover"}
+                  objectFit={{ base: "cover", mid: "fit" }}
                   h="260px"
                   ml={"auto"}
                   mr="auto"
                   transition={"transform .2s ease-in-out"}
-                  _hover={{ cursor: "pointer", transform: "scale(1.1)" }}
+                  _hover={{ cursor: "pointer" }}
                   src={`${data.src}`}
                   loading="lazy"
                 ></Image>

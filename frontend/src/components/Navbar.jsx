@@ -121,48 +121,65 @@ const Navbar = () => {
               : user.name}
           </Link>
           <Button
-            colorScheme="teal"
+            bg={"white"}
+            color={"teal"}
+            _hover={{ bg: "teal.100", transition: "ease-in 0.3s" }}
             display={"flex"}
             alignItems="center"
             gap={1}
             onClick={handleCartClick}
           >
             <FaShoppingCart />
-            Cart
-            <Text fontSize={"14px"} fontWeight="500" mt="3px">
-              {cart.length}
-            </Text>
+            Cart {cart.length > 0 ? cart.length : ""}
           </Button>
-          <Button colorScheme="teal" onClick={handleOrdersClick}>
+          <Button
+            bg={"white"}
+            color={"teal"}
+            _hover={{ bg: "teal.100", transition: "ease-in 0.3s" }}
+            onClick={handleOrdersClick}
+          >
             Orders
           </Button>
           {user?.isAdmin ? (
-            <Button colorScheme="teal" onClick={handleAdminRoute}>
+            <Button
+              bg={"white"}
+              color={"teal"}
+              _hover={{ bg: "teal.100", transition: "ease-in 0.3s" }}
+              onClick={handleAdminRoute}
+            >
               Admin
             </Button>
           ) : null}
           {user?.name === "nouser" ? (
             <Button
-              colorScheme="teal"
+              bg={"white"}
+              color={"teal"}
+              _hover={{ bg: "teal.100", transition: "ease-in 0.3s" }}
               mr="10px"
               onClick={() => history("/home")}
             >
               Login
             </Button>
           ) : (
-            <Button colorScheme="teal" mr="10px" onClick={handleLogOut}>
+            <Button
+              bg={"white"}
+              color={"teal"}
+              _hover={{ bg: "teal.100", transition: "ease-in 0.3s" }}
+              mr="10px"
+              onClick={handleLogOut}
+            >
               Logout
             </Button>
           )}
         </Flex>
         <Button
           ref={btnRef}
-          colorScheme="teal"
+          colorScheme="white"
           onClick={onOpen}
           display={{ lg: "none", xl: "none" }}
           marginRight={"5px"}
         >
-          <GiHamburgerMenu fontSize={"20"} />
+          <GiHamburgerMenu fontSize={"20"} color="teal" />
         </Button>
         <Drawer
           isOpen={isOpen}
@@ -202,15 +219,7 @@ const Navbar = () => {
                 padding={"30px"}
               >
                 <FaShoppingCart />
-                Cart
-                <Text
-                  color={"teal.500"}
-                  fontSize={"14px"}
-                  fontWeight="500"
-                  mt={"3px"}
-                >
-                  {cart.length}
-                </Text>
+                Cart {cart.length > 0 ? cart.length : ""}
               </Button>
               <Button
                 padding={"30px"}

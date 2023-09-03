@@ -12,6 +12,7 @@ import {
 import React, { useRef, useState } from "react";
 import { UserState } from "../context/UserProvider";
 import axios from "axios";
+import { createProduct } from "../api";
 
 const CreateProduct = () => {
   const { user } = UserState();
@@ -114,13 +115,10 @@ const CreateProduct = () => {
     formData.append("prodPrice", product.price);
     formData.append("prodCategory", product.category);
     formData.append("prodDesc", product.desc);
+
     try {
-      const { data } = await axios.post(
-        "https://ecommerce-sumit.onrender.com/api/product/upload",
-        formData,
-        config
-      );
-      console.log(data);
+      const data = await createProduct(formData, config);
+      // console.log(data);
     } catch (err) {
       toast({
         title: "Error Occured...",

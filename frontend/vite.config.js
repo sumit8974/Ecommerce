@@ -4,14 +4,15 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-
-  proxy: {
-    "/api": {
-      // target: "https://ecommerce-sumit.onrender.com",
-      // target: "http://localhost:5000/",
-      changeOrigin: true,
-      secure: false,
-      ws: true,
+  server: {
+    proxy: {
+      "/api": {
+        // target: "https://ecommerce-sumit.onrender.com",
+        target: "http://localhost:5000/",
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
     },
   },
 });

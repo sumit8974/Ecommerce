@@ -7,8 +7,6 @@ import {
   Box,
   Card,
   CardBody,
-  CardFooter,
-  Divider,
   Flex,
   Heading,
   Image,
@@ -16,9 +14,9 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { UserState } from "../context/UserProvider";
+import { fetchAllOrdersfromApi } from "../api";
 
 const AllOrders = () => {
   const toast = useToast();
@@ -32,11 +30,7 @@ const AllOrders = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(
-        "https://ecommerce-sumit.onrender.com/api/order/admin",
-        config
-      );
-      // console.log(data);
+      const data = await fetchAllOrdersfromApi(config);
       setOrders(data);
     } catch (err) {
       toast({
@@ -82,17 +76,20 @@ const AllOrders = () => {
                   position="relative"
                 >
                   {o.orders.map((ord, index) => (
-                    <Card minW="xs" maxW="xs" key={index}>
+                    <Card
+                      minW={{ base: "sm", md: "300px" }}
+                      maxW={{ base: "sm", md: "300px" }}
+                      key={index}
+                    >
                       <CardBody>
                         <Image
-                          objectFit={"cover"}
+                          objectFit={{ base: "cover", mid: "fit" }}
                           h="260px"
                           ml={"auto"}
                           mr="auto"
                           transition={"transform .2s ease-in-out"}
                           _hover={{
                             cursor: "pointer",
-                            transform: "scale(1.1)",
                           }}
                           src={`${ord.src}`}
                           loading="lazy"
@@ -108,10 +105,6 @@ const AllOrders = () => {
                           </Text>
                         </Stack>
                       </CardBody>
-                      <Divider />
-                      <CardFooter>
-                        <Text>{ord.desc.slice(0, 100)}</Text>
-                      </CardFooter>
                     </Card>
                   ))}
                 </Flex>

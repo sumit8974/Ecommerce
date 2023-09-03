@@ -6,7 +6,7 @@ import {
   Tabs,
   useToast,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AllProducts from "../components/AllProducts";
 import CreateProduct from "../components/CreateProduct";
@@ -18,17 +18,20 @@ const AdminPage = () => {
   const toast = useToast();
   const { user } = UserState();
   const history = useNavigate();
-  if (!user.isAdmin) {
-    toast({
-      title: "Error Occured!",
-      description: "Not an admin...",
-      status: "error",
-      duration: 5000,
-      isClosable: true,
-    });
-    history("/");
-    return;
-  }
+  useEffect(() => {
+    if (!user.isAdmin) {
+      toast({
+        title: "Error Occured!",
+        description: "Unauthorized access...",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      history("/");
+      return;
+    }
+  }, [user]);
+
   return (
     <>
       <Navbar />

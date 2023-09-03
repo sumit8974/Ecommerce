@@ -12,13 +12,15 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { loginUser } from "../api";
 
 const Login = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
   const toast = useToast();
 
   const history = useNavigate();
@@ -41,12 +43,8 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axios.post(
-        // "http://localhost:5000/api/user/login",
-        "https://ecommerce-sumit.onrender.com/api/user/login",
-        { email, password },
-        config
-      );
+      const loginData = { email, password };
+      const data = await loginUser(loginData, config);
       toast({
         title: "Login Successfull",
         status: "success",
@@ -55,8 +53,11 @@ const Login = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
+      const redirect = searchParams.get("redirectTo")
+        ? searchParams.get("redirectTo")
+        : "/";
       setTimeout(() => {
-        history("/");
+        history(redirect);
       }, 1000);
     } catch (err) {
       // console.log(err);
