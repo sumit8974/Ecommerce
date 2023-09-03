@@ -28,7 +28,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
@@ -59,7 +58,6 @@ const authUser = asyncHandler(async (req, res, next) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
@@ -68,4 +66,17 @@ const authUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { registerUser, authUser };
+const verifyIsAdmin = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  try {
+    const user = await User.findById(_id);
+    res.status(200).json({
+      isAdmin: user.isAdmin,
+    });
+  } catch (err) {
+    res.status(400);
+    throw new Error("Error occured while fetching user data...");
+  }
+});
+
+module.exports = { registerUser, authUser, verifyIsAdmin };
